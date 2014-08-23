@@ -1,4 +1,10 @@
 language: java
 jdk:
-  - oraclejdk7
-  - openjdk7
+- oraclejdk7
+- openjdk7
+deploy:
+  provider: opsworks
+  access-key-id: AKIAITLYQRLJ3VPVRUVA
+  secret-access-key:
+    secure: BaCYzfwmeI54aT872QteWj0NTu2QRe1NL1KTA2ePkuZslKBiVbrSjkxi8xXnyUC6qXFC1t2o67o3I4+4X47iv+xpBcj0T3UVYFTpSDJxO+ZfFK1+4tT4HoJpDtAhpk7rQpvIsA+au9lpPV1IYhjxDxkGr1FLSJSVFyc6irExu9Q=
+  app-id: 397491cf-6caf-4d1e-8c52-a3ebe0b66167
