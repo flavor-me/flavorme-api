@@ -1,5 +1,7 @@
 package io.noah.flavorme.api.hello;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,8 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class HelloApi {
-    @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    public String hello() {
-        return "Hello~";
+    @Autowired
+    private HelloRepository r;
+
+    @RequestMapping(value = "/hello/{msg}", method = RequestMethod.GET)
+    public Message hello(@PathVariable("msg") String messageText) {
+        Message message = new Message(messageText);
+        r.hello(message);
+        return message;
     }
 }
