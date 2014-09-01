@@ -26,7 +26,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
             io.noah.flavorme.api.config.AppContextConfig
-            io.noah.flavorme.api.config.MongoDbContextConfig
+            io.noah.flavorme.api.config.MongoDBContextConfig
         </param-value>
 	</context-param>
 

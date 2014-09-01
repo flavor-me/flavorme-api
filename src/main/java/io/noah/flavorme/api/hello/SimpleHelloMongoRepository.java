@@ -12,7 +12,7 @@ import static org.springframework.data.mongodb.core.query.Query.query;
  * Created by chanwook on 2014. 8. 28..
  */
 @Repository
-public class SimpleHelloRepository implements HelloRepository {
+public class SimpleHelloMongoRepository implements HelloRepository {
 
     @Autowired
     private MongoTemplate mt;

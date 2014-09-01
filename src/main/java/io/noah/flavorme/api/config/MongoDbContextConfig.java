@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
  * Created by chanwook on 2014. 8. 28..
  */
 @Configuration
-public class MongoDbContextConfig extends AbstractMongoConfiguration {
+public class MongoDBContextConfig extends AbstractMongoConfiguration {
 
     public static final String MONGO_HOST = "ds063809.mongolab.com";
 

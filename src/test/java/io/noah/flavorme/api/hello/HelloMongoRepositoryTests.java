@@ -1,7 +1,7 @@
 package io.noah.flavorme.api.hello;
 
 import io.noah.flavorme.api.config.AppContextConfig;
-import io.noah.flavorme.api.config.MongoDbContextConfig;
+import io.noah.flavorme.api.config.MongoDBContextConfig;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -13,8 +13,8 @@ import static org.junit.Assert.*;
 /**
  * Created by chanwook on 2014. 8. 29..
  */
-@ContextConfiguration(classes = {MongoDbContextConfig.class, AppContextConfig.class})
-public class HelloRepositoryTests extends AbstractJUnit4SpringContextTests {
+@ContextConfiguration(classes = {MongoDBContextConfig.class, AppContextConfig.class})
+public class HelloMongoRepositoryTests extends AbstractJUnit4SpringContextTests {
 
     @Autowired
     HelloRepository r;
@@ -40,12 +40,11 @@ public class HelloRepositoryTests extends AbstractJUnit4SpringContextTests {
         saved = r.find(message.getId());
         assertEquals("Bye~~", saved.getMessage());
 
-        r.bye(message);
+        r.bye(saved);
 
+        System.out.println(">>>> " + r.countAll());
         assertTrue(0 == r.countAll());
 
-
         m.dropCollection(Message.class);
-
     }
 }
