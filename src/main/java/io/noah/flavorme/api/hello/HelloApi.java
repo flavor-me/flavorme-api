@@ -11,13 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class HelloApi {
-    @Autowired
+    @Autowired(required = false)
     private HelloRepository r;
 
     @RequestMapping(value = "/hello/{msg}", method = RequestMethod.GET)
     public Message hello(@PathVariable("msg") String messageText) {
         Message message = new Message(messageText);
-        r.hello(message);
+        if (r != null) {
+            r.hello(message);
+        }
         return message;
     }
 }

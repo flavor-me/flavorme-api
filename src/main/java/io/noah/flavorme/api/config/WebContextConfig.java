@@ -16,6 +16,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import java.util.ArrayList;
@@ -50,12 +52,23 @@ public class WebContextConfig extends WebMvcConfigurerAdapter {
         // Setting to ViewResolver List
         ArrayList<ViewResolver> viewResolvers = new ArrayList<ViewResolver>();
         viewResolvers.add(new BeanNameViewResolver());
+        viewResolvers.add(getJspViewResolver());
         viewResolver.setViewResolvers(viewResolvers);
 
         // Setting to Default View
         ArrayList<View> defaultViews = new ArrayList<View>();
         defaultViews.add(new MappingJackson2JsonView());
         viewResolver.setDefaultViews(defaultViews);
+
+        return viewResolver;
+    }
+
+    @Bean
+    public ViewResolver getJspViewResolver() {
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setPrefix("/WEB-INF/view/");
+        viewResolver.setSuffix(".jsp");
+        viewResolver.setViewClass(JstlView.class);
 
         return viewResolver;
     }

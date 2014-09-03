@@ -2,13 +2,24 @@ apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
-apply plugin: 'tomcat'
 
-sourceCompatibility = 1.7
+// Tomcat 8.x
+apply plugin: 'org.akhikhl.gretty'
+
+// Tomcat 7.x
+//apply plugin: 'tomcat'
+
+ext {
+    javaVersion = 1.7
+ }
+
+sourceCompatibility = rootProject.ext.javaVersion
+targetCompatibility = rootProject.ext.javaVersion
 
 repositories {
     mavenCentral()
     mavenLocal()
+    jcenter()
     maven {
         url 'http://repo.spring.io/milestone'
     }
@@ -20,20 +31,33 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:1.2.4'
+        // Tomcat 8.x
+        classpath 'org.akhikhl.gretty:gretty:+'
+
+        // Tomcat 7.x
+        //classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:1.2.4'
     }
 }
 
 group = "noah.flavorme"
 version = "1.0"
 
-jar {
+war {
     baseName = "flavorme-api"
 }
 
 dependencies {
     // test
     testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    // Servlet
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    providedCompile 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.1'
+//    compile 'javax.servlet.jsp.jstl:jstl-api:1.2'
+//    compile 'org.glassfish.web:javax.servlet.jsp.jstl:1.2.1'
+    providedCompile 'javax.el:javax.el-api:3.0.0'
+    compile 'javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api:1.2.1'
+
 
     // spring
     def springVersion = '4.1.0.RC2'
@@ -68,17 +92,31 @@ dependencies {
     compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
     compile "com.fasterxml.jackson.module:jackson-module-jsonSchema:${jacksonVersion}"
 
-    // tomcat
+    // tomcat 7.x
+    /*
     def tomcatVersion = '7.0.11'
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
     tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
         exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
     }
+    */
+    // tomcat 8.x
+
 }
 
+// Tomcat 8.x
+// http://akhikhl.github.io/gretty-doc/Gretty-configuration.html
+gretty {
+    port = 10001
+    contextPath = '/'
+    loggingLevel = 'DEBUG'
+}
+
+/* Tomcat 7.x
 tomcat {
     httpPort = 10001
 }
-
 tomcatRun.contextPath = "/"
+*/
+
