@@ -88,5 +88,17 @@ public class HouseSearchApiTests {
         Assert.assertNotNull(result);
         Assert.assertTrue(result.getHouseList().size() == 1);
 
+        Assert.assertEquals(this.testHouses.get(0).getHouseName(), result.getHouseList().get(0).getHouseName());
+        Assert.assertEquals(this.testHouses.get(0).getCategory(), result.getHouseList().get(0).getCategory());
+        Assert.assertEquals(this.testHouses.get(0).getDescription(), result.getHouseList().get(0).getDescription());
+        Assert.assertEquals(this.testHouses.get(0).getGrade(), result.getHouseList().get(0).getGrade());
+        Assert.assertEquals(this.testHouses.get(0).getHouseAddress(), result.getHouseList().get(0).getHouseAddress());
+        Assert.assertEquals(this.testHouses.get(0).getImages().size(), result.getHouseList().get(0).getImages().size());
+        Assert.assertEquals(this.testHouses.get(0).getImages().get(0).getIndex(), result.getHouseList().get(0).getImages().get(0).getIndex());
+        Assert.assertEquals(this.testHouses.get(0).getImages().get(0).getUrl(), result.getHouseList().get(0).getImages().get(0).getUrl());
+        Assert.assertEquals(this.testHouses.get(0).getImages().get(0).getAlt(), result.getHouseList().get(0).getImages().get(0).getAlt());
+
     }
+
+    //TODO 케이스 별 검색 조건 추가
 }
