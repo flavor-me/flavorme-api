@@ -1,5 +1,8 @@
 package io.noah.flavorme.api.config;
 
+import framewise.dustview.ClasspathSupportFileSystemDustTemplateLoader;
+import framewise.dustview.DustTemplateEngine;
+import framewise.dustview.SimpleDustTemplateView;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +24,7 @@ import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -70,7 +74,22 @@ public class WebContextConfig extends WebMvcConfigurerAdapter {
         viewResolver.setSuffix(".jsp");
         viewResolver.setViewClass(JstlView.class);
 
+        HashMap<String, Object> attributesMap = new HashMap<>();
+        attributesMap.put(SimpleDustTemplateView.VIEW_PATH_PREFIX, "../view/");
+        attributesMap.put(SimpleDustTemplateView.VIEW_PATH_SUFFIX, "");
+        attributesMap.put(SimpleDustTemplateView.MULTI_LOAD, true);
+        attributesMap.put(SimpleDustTemplateView.DUST_ENGINE_OBJECT, dustEngine());
+        viewResolver.setAttributesMap(attributesMap);
+
         return viewResolver;
+    }
+
+    @Bean
+    public DustTemplateEngine dustEngine() {
+        DustTemplateEngine engine = new DustTemplateEngine();
+        engine.setViewTemplateLoader(new ClasspathSupportFileSystemDustTemplateLoader());
+        engine.setCompiled(false);
+        return engine;
     }
 
     @Override

@@ -20,8 +20,13 @@ repositories {
     mavenCentral()
     mavenLocal()
     jcenter()
+
     maven {
         url 'http://repo.spring.io/milestone'
+    }
+
+    flatDir {
+        dirs 'libs'
     }
 }
 
@@ -92,6 +97,14 @@ dependencies {
     compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
     compile "com.fasterxml.jackson.module:jackson-module-jsonSchema:${jacksonVersion}"
 
+    // dustview
+    compile 'framewise:dustview:1.4.GA'
+    compile 'org.mozilla:rhino:1.7R4'
+
+    // test
+    testCompile 'org.mockito:mockito-all:1.9.5'
+    testCompile 'com.jayway.jsonpath:json-path:0.9.1'
+
     // tomcat 7.x
     /*
     def tomcatVersion = '7.0.11'
@@ -101,7 +114,6 @@ dependencies {
         exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
     }
     */
-    // tomcat 8.x
 
 }
 
@@ -119,4 +131,5 @@ tomcat {
 }
 tomcatRun.contextPath = "/"
 */
+
 
