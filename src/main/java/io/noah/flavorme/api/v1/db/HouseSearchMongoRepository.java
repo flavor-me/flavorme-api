@@ -33,11 +33,11 @@ public class HouseSearchMongoRepository implements HouseSearchRepository {
     }
 
     @Override
-    public HouseTalkList getTalkList(long houseId, int itemCount, int page) {
+    public HouseTalkList getTalkList(long houseId, PageSupports pageParam) {
         Criteria c = where("houseId").is(houseId);
-        int startItem = (page - 1) * itemCount;
+        int startItem = (pageParam.getPage() - 1) * pageParam.getItemSize();
 
-        List<HouseTalk> talkList = mt.find(query(c).skip(startItem).limit(itemCount), HouseTalk.class);
+        List<HouseTalk> talkList = mt.find(query(c).skip(startItem).limit(pageParam.getItemSize()), HouseTalk.class);
         return new HouseTalkList(houseId, talkList);
     }
 }

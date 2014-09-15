@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by chanwook on 2014. 9. 5..
  */
-public class HouseSearchCriteria implements Serializable {
+public class HouseSearchCriteria extends PageSupports implements Serializable {
     private String query;
 
     private String grade;
@@ -48,11 +48,11 @@ public class HouseSearchCriteria implements Serializable {
         this.itemSizePerPage = itemSizePerPage;
     }
 
-    public int getPageCount() {
+    public int getPage() {
         return pageCount;
     }
 
-    public void setPageCount(int pageCount) {
+    public void setPage(int pageCount) {
         this.pageCount = pageCount;
     }
 }

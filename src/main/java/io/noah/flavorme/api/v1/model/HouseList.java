@@ -12,7 +12,7 @@ public class HouseList extends PageSupports {
 
     public HouseList(HouseSearchCriteria c, List<House> houseList) {
         super.setItemSize(c.getItemSizePerPage());
-        super.setPageCount(c.getPageCount());
+        super.setPage(c.getPage());
         this.houseList = houseList;
     }
 

@@ -4,6 +4,7 @@ import io.noah.flavorme.api.v1.db.HouseSearchRepository;
 import io.noah.flavorme.api.v1.model.HouseList;
 import io.noah.flavorme.api.v1.model.HouseSearchCriteria;
 import io.noah.flavorme.api.v1.model.HouseTalkList;
+import io.noah.flavorme.api.v1.model.PageSupports;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,9 +37,9 @@ public class HouseSearchApi {
     }
 
     @RequestMapping(value = "/house/{houseId}/talklist")
-    public HouseTalkList getTalkList(@PathVariable("houseId") long houseId, int itemCount, int page) {
+    public HouseTalkList getTalkList(@PathVariable("houseId") long houseId, PageSupports pageParam) {
 
-        HouseTalkList list = searchRepository.getTalkList(houseId, itemCount, page);
+        HouseTalkList list = searchRepository.getTalkList(houseId, pageParam);
         return list;
     }
 }

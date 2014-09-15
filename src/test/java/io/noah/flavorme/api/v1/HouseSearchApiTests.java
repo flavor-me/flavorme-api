@@ -96,7 +96,7 @@ public class HouseSearchApiTests {
         c.setGrade(HouseGrade.X);
         c.setQuery("양남");
         c.setItemSizePerPage(10);
-        c.setPageCount(0);
+        c.setPage(0);
 
         HouseList result = api.search(c);
 
@@ -121,7 +121,7 @@ public class HouseSearchApiTests {
         int page = 1;
         int itemCount = 10;
 
-        HouseTalkList list = api.getTalkList(testHouses.get(0).getHouseId(), itemCount, page);
+        HouseTalkList list = api.getTalkList(testHouses.get(0).getHouseId(), new PageSupports(page, itemCount));
 
         Assert.assertNotNull(list);
         Assert.assertTrue("size: " + list.getTalkList().size(), list.getTalkList().size() == 1);
