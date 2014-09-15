@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -41,6 +42,8 @@ public class HouseSearchApiTests {
     protected WebApplicationContext wac;
 
     private List<House> testHouses;
+    private HouseTalk testTalk;
+
     private HouseSearchApi api;
 
     @Before
@@ -64,6 +67,16 @@ public class HouseSearchApiTests {
         House h = new House("양남한우", "영등포구 문래동 양남시장 100번지", HouseCategory.BEAF, "사장님이 구워주는 일품 소고기!!!", HouseGrade.S, images);
         mt.insert(h);
         this.testHouses.add(h);
+
+        Date date = new Date();
+        ArrayList<HouseTalkReply> replies = new ArrayList<>();
+        replies.add(new HouseTalkReply(System.currentTimeMillis(), "댓글1", new Date()));
+        replies.add(new HouseTalkReply(System.currentTimeMillis(), "댓글2", new Date()));
+        replies.add(new HouseTalkReply(System.currentTimeMillis(), "댓글3", new Date()));
+
+        HouseTalk talk = new HouseTalk(h.getHouseId(), date, date, "최고에욧!!", images, replies);
+        mt.insert(talk);
+        this.testTalk = talk;
     }
 
     @After
@@ -71,6 +84,8 @@ public class HouseSearchApiTests {
         for (House h : this.testHouses) {
             mt.remove(h);
         }
+
+        mt.remove(testTalk);
     }
 
     @Test
@@ -99,6 +114,27 @@ public class HouseSearchApiTests {
         Assert.assertEquals(this.testHouses.get(0).getImages().get(0).getAlt(), result.getHouseList().get(0).getImages().get(0).getAlt());
 
     }
-
     //TODO 케이스 별 검색 조건 추가
+
+    @Test
+    public void testTalk() throws Exception {
+        int page = 1;
+        int itemCount = 10;
+
+        HouseTalkList list = api.getTalkList(testHouses.get(0).getHouseId(), itemCount, page);
+
+        Assert.assertNotNull(list);
+        Assert.assertTrue("size: " + list.getTalkList().size(), list.getTalkList().size() == 1);
+
+        Assert.assertEquals(this.testTalk.getTalkId(), list.getTalkList().get(0).getTalkId());
+        Assert.assertEquals(this.testTalk.getText(), list.getTalkList().get(0).getText());
+        Assert.assertEquals(this.testTalk.getCreated(), list.getTalkList().get(0).getCreated());
+        Assert.assertEquals(this.testTalk.getHouseId(), list.getTalkList().get(0).getHouseId());
+        Assert.assertEquals(this.testTalk.getImages().size(), list.getTalkList().get(0).getImages().size());
+        Assert.assertEquals(this.testTalk.getReplies().size(), list.getTalkList().get(0).getReplies().size());
+        Assert.assertEquals(this.testTalk.getReplies().get(0).getReplyId(), list.getTalkList().get(0).getReplies().get(0).getReplyId());
+        Assert.assertEquals(this.testTalk.getReplies().get(0).getText(), list.getTalkList().get(0).getReplies().get(0).getText());
+        Assert.assertEquals(this.testTalk.getReplies().get(0).getUpdated(), list.getTalkList().get(0).getReplies().get(0).getUpdated());
+
+    }
 }

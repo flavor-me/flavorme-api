@@ -1,13 +1,12 @@
 package io.noah.flavorme.api.v1.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by chanwook on 2014. 9. 5..
  */
-public class HouseList extends PageSupports implements Serializable {
+public class HouseList extends PageSupports {
 
     private List<House> houseList = new ArrayList<>();
 
