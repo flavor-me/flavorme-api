@@ -32,7 +32,6 @@ public class HouseSearchApi {
     public HouseList search(HouseSearchCriteria c) {
 
         HouseList list = searchRepository.search(c);
-
         return list;
     }
 

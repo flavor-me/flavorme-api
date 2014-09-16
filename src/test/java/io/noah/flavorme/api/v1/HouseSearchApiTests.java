@@ -95,8 +95,8 @@ public class HouseSearchApiTests {
         c.setCategory(HouseCategory.BEAF);
         c.setGrade(HouseGrade.X);
         c.setQuery("양남");
-        c.setItemSizePerPage(10);
-        c.setPage(0);
+        c.setItemSize(10);
+        c.setPage(1);
 
         HouseList result = api.search(c);
 

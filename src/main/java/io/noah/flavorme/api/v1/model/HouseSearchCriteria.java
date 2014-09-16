@@ -12,10 +12,6 @@ public class HouseSearchCriteria extends PageSupports implements Serializable {
 
     private String category;
 
-    private int itemSizePerPage;
-
-    private int pageCount;
-
     public String getQuery() {
         return query;
     }
@@ -38,21 +34,5 @@ public class HouseSearchCriteria extends PageSupports implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public int getItemSizePerPage() {
-        return itemSizePerPage;
-    }
-
-    public void setItemSizePerPage(int itemSizePerPage) {
-        this.itemSizePerPage = itemSizePerPage;
-    }
-
-    public int getPage() {
-        return pageCount;
-    }
-
-    public void setPage(int pageCount) {
-        this.pageCount = pageCount;
     }
 }

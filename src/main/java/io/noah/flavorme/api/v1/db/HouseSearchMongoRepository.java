@@ -5,6 +5,7 @@ import io.noah.flavorme.api.v1.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.List;
 
@@ -26,8 +27,9 @@ public class HouseSearchMongoRepository implements HouseSearchRepository {
                 where("houseName").regex(c.getQuery())
                         .where("grade").is(c.getGrade())
                         .where("category").is(c.getCategory());
+        Query q = query(mongoCriteria).skip(c.getStartItem()).limit(c.getItemSize());
 
-        List<House> houses = mt.find(query(mongoCriteria), House.class);
+        List<House> houses = mt.find(q, House.class);
         HouseList list = new HouseList(c, houses);
         return list;
     }
@@ -35,9 +37,9 @@ public class HouseSearchMongoRepository implements HouseSearchRepository {
     @Override
     public HouseTalkList getTalkList(long houseId, PageSupports pageParam) {
         Criteria c = where("houseId").is(houseId);
-        int startItem = (pageParam.getPage() - 1) * pageParam.getItemSize();
+        Query q = query(c).skip(pageParam.getStartItem()).limit(pageParam.getItemSize());
 
-        List<HouseTalk> talkList = mt.find(query(c).skip(startItem).limit(pageParam.getItemSize()), HouseTalk.class);
+        List<HouseTalk> talkList = mt.find(q, HouseTalk.class);
         return new HouseTalkList(houseId, talkList);
     }
 }

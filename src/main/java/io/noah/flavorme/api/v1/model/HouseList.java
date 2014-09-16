@@ -11,7 +11,7 @@ public class HouseList extends PageSupports {
     private List<House> houseList = new ArrayList<>();
 
     public HouseList(HouseSearchCriteria c, List<House> houseList) {
-        super.setItemSize(c.getItemSizePerPage());
+        super.setItemSize(c.getItemSize());
         super.setPage(c.getPage());
         this.houseList = houseList;
     }

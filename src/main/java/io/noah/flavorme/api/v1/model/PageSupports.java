@@ -35,4 +35,8 @@ public class PageSupports implements Serializable {
     public void setItemSize(int itemSize) {
         this.itemSize = itemSize;
     }
+
+    public int getStartItem() {
+        return (getPage() - 1) * getItemSize();
+    }
 }
